@@ -40,7 +40,7 @@ export default function Home() {
       <section className="hero container">
         <div className="hero-content">
           <span className="badge">Adoção responsável com ONGs</span>
-          <h1>Todo animal merece um <em>lar amigo.</em></h1>
+          <h1>Todo animal merece um <em>lar.</em></h1>
           <p>Conheça os animais das ONGs, ofereça um lar temporário ou ajude com um PIX.</p>
 
           <div className="hero-buttons">

@@ -20,18 +20,24 @@ export default function Ongs() {
             <div className="page-head">
                 <h1>ONGs Parceiras</h1>
                 <div className="search-bar">
-                    <span>🔍</span>
+                    {/* Emoji da lupa removido */}
                     <input placeholder="Buscar por nome ou cidade" value={busca} onChange={e => setBusca(e.target.value)} />
                 </div>
             </div>
 
-            <div className="grid">
+            <div className="ong-grid">
                 {ongsFiltradas.map(ong => (
-                    <Link to={`/ong/${ong.id}`} key={ong.id} className="card" style={{ padding: '1.5rem', display: 'block' }}>
+                    <Link to={`/ong/${ong.id}`} key={ong.id} className="ong-card">
                         <h3>{ong.name}</h3>
-                        <p className="muted">📍 {ong.city} - {ong.state}</p>
-                        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text)' }}>{ong.description || 'Sem descrição.'}</p>
-                        <span style={{ color: 'var(--primary)', fontWeight: 'bold', display: 'block', marginTop: '1rem' }}>Ver perfil completo →</span>
+
+                        {/* Emoji do pino removido */}
+                        <p className="muted">{ong.city} - {ong.state}</p>
+
+                        <p className="ong-desc-preview">
+                            {ong.description || 'Esta ONG ainda não adicionou uma descrição.'}
+                        </p>
+
+                        <span className="ong-link">Ver perfil completo →</span>
                     </Link>
                 ))}
             </div>

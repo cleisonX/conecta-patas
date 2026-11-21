@@ -3,7 +3,7 @@ import { api } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 export default function CreateAnimal() {
-    const [form, setForm] = useState({ isForAdoption: true }); // Já vem marcado por padrão
+    const [form, setForm] = useState({ isForAdoption: true });
     const [files, setFiles] = useState([]);
     const [ok, setOk] = useState(false);
     const navigate = useNavigate();

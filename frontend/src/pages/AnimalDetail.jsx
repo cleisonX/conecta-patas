@@ -37,7 +37,7 @@ export default function AnimalDetail() {
     return (
         <section className="container detail" style={{ paddingTop: '2rem' }}>
             <div style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10 }}>
-                <button onClick={() => navigate(-1)} className="btn-back">← Voltar</button>
+                <button onClick={() => navigate(-1)} className="btn-back">Voltar</button>
             </div>
 
             <div className="gallery" style={{ marginTop: '2rem' }}>
