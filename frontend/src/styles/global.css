@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -114,4 +115,15 @@ button,
 .muted {
     color: var(--text-light);
     font-size: 0.9rem;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+  outline: none; /* Remove a borda de foco padrão */
+}
+
+/* Mantém o foco apenas para quem usa teclado (acessibilidade) */
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
