@@ -41,7 +41,8 @@ router.get('/', async (req, res) => {
 router.get('/pending', requireAuth, requireOng, async (req, res) => {
     const animals = await prisma.animal.findMany({
         where: { status: 'PENDING', ongId: req.user.ongId },
-        include: { images: true, submittedByUser: { select: { name: true, email: true } } }
+        // ADICIONADO O PHONE AQUI
+        include: { images: true, submittedByUser: { select: { name: true, email: true, phone: true } } }
     });
     res.json(animals);
 });
@@ -70,7 +71,7 @@ router.post('/', requireAuth, requireOng, upload.array('images', 6), async (req,
             isForAdoption: isForAdoption === 'true',
             needsTempHome: needsTempHome === 'true',
             needsMoney: needsMoney === 'true',
-            images: { create: files.map((f, i) => ({ url: f.path, isMain: i === 0 })) } // f.path é a URL do Cloudinary
+            images: { create: files.map((f, i) => ({ url: f.path, isMain: i === 0 })) }
         },
         include: { images: true }
     });

@@ -5,8 +5,9 @@ import { api } from '../services/api';
 export default function Register() {
     const [isOng, setIsOng] = useState(false);
     const [form, setForm] = useState({ name: '', email: '', password: '' });
-    const [ong, setOng] = useState({ name: '', city: '', state: '', phone: '', cnpj: '', description: '' });
+    const [ong, setOng] = useState({ name: '', city: '', state: '', phone: '', cnpj: '', description: '', pixKey: '' });
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false); // NOVO ESTADO
     const navigate = useNavigate();
 
     const submit = async (e) => {
@@ -30,7 +31,19 @@ export default function Register() {
                 </div>
                 <input placeholder="Seu nome" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
                 <input placeholder="E-mail" type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
-                <input placeholder="Senha" type="password" required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
+
+                <div className="password-wrapper">
+                    <input
+                        placeholder="Senha"
+                        type={showPassword ? "text" : "password"}
+                        required
+                        value={form.password}
+                        onChange={e => setForm({ ...form, password: e.target.value })}
+                    />
+                    <button type="button" className="eye-btn" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? '🙈' : '👁️'}
+                    </button>
+                </div>
 
                 {isOng && (
                     <>
@@ -39,7 +52,8 @@ export default function Register() {
                             <input placeholder="Cidade" required value={ong.city} onChange={e => setOng({ ...ong, city: e.target.value })} />
                             <input placeholder="UF" maxLength={2} required value={ong.state} onChange={e => setOng({ ...ong, state: e.target.value.toUpperCase() })} />
                         </div>
-                        <input placeholder="Telefone" value={ong.phone} onChange={e => setOng({ ...ong, phone: e.target.value })} />
+                        <input placeholder="Telefone (WhatsApp)" value={ong.phone} onChange={e => setOng({ ...ong, phone: e.target.value })} />
+                        <input placeholder="Chave PIX (para doações)" value={ong.pixKey} onChange={e => setOng({ ...ong, pixKey: e.target.value })} />
                         <textarea placeholder="Descrição da ONG" value={ong.description} onChange={e => setOng({ ...ong, description: e.target.value })} />
                     </>
                 )}

@@ -22,22 +22,37 @@ export default function ReviewAnimals() {
 
             {pending.length === 0 ? <p className="empty-state">Nenhum envio pendente.</p> : (
                 <div className="list" style={{ marginTop: '2rem' }}>
-                    {pending.map(a => (
-                        <div key={a.id} className="request-card" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', width: '100%' }}>
-                                {a.images?.[0] && <img src={a.images[0].url} alt="" style={{ width: '80px', height: '80px', borderRadius: '12px', objectFit: 'cover' }} />}
-                                <div>
-                                    <h3>{a.name}</h3>
-                                    <p className="muted">{a.species}</p>
+                    {pending.map(a => {
+                        // Cria o link do WhatsApp se o usuário tiver telefone
+                        const whatsappLink = a.submittedByUser?.phone
+                            ? `https://wa.me/55${a.submittedByUser.phone.replace(/\D/g, '')}?text=Olá ${a.submittedByUser.name}, falo em nome da ONG sobre o animal ${a.name} que você enviou para avaliação.`
+                            : null;
+
+                        return (
+                            <div key={a.id} className="request-card" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', width: '100%' }}>
+                                    {a.images?.[0] && <img src={a.images[0].url} alt="" style={{ width: '80px', height: '80px', borderRadius: '12px', objectFit: 'cover' }} />}
+                                    <div>
+                                        <h3>{a.name}</h3>
+                                        <p className="muted">{a.species}</p>
+                                        <p className="muted"><strong>Doador:</strong> {a.submittedByUser?.name}</p>
+                                    </div>
+                                </div>
+                                <p style={{ marginTop: '1rem', fontSize: '0.95rem' }}><strong>Motivo:</strong> {a.submissionReason}</p>
+
+                                <div className="actions-inline" style={{ marginTop: '1rem', width: '100%', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                    {/* BOTÃO DO WHATSAPP */}
+                                    {whatsappLink && (
+                                        <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn-whatsapp" style={{ flex: 1, minWidth: '150px' }}>
+                                            Chamar no WhatsApp
+                                        </a>
+                                    )}
+                                    <button className="btn-primary" onClick={() => review(a.id, true)} style={{ flex: 1 }}>Aprovar</button>
+                                    <button className="btn-delete-text" onClick={() => review(a.id, false)} style={{ flex: 1 }}>Recusar</button>
                                 </div>
                             </div>
-                            <p style={{ marginTop: '1rem', fontSize: '0.95rem' }}><strong>Motivo:</strong> {a.submissionReason}</p>
-                            <div className="actions-inline" style={{ marginTop: '1rem', width: '100%' }}>
-                                <button className="btn-primary" onClick={() => review(a.id, true)} style={{ flex: 1 }}>Aprovar</button>
-                                <button className="btn-delete-text" onClick={() => review(a.id, false)} style={{ flex: 1 }}>Recusar</button>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </section>

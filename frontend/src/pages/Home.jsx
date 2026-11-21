@@ -62,7 +62,8 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-image">
-          <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=800&auto=format&fit=crop" alt="Cachorro e gato" />
+          {/* AQUI ESTÁ A NOVA IMAGEM */}
+          <img src="/hero.jpg" alt="Cachorro e gato deitados no tapete" />
         </div>
       </section>
 

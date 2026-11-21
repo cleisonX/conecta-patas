@@ -12,11 +12,15 @@ export default function Profile() {
         address: user.address || '',
         avatarUrl: user.avatarUrl || '',
         description: user.description || '',
-        pixKey: user.pixKey || '' // <-- CAMPO PIX
+        pixKey: user.pixKey || ''
     });
     const [avatarFile, setAvatarFile] = useState(null);
     const [passwords, setPasswords] = useState({ currentPassword: '', newPassword: '' });
     const [msg, setMsg] = useState({ type: '', text: '' });
+
+    // NOVOS ESTADOS PARA MOSTRAR SENHA
+    const [showCurrent, setShowCurrent] = useState(false);
+    const [showNew, setShowNew] = useState(false);
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
@@ -66,7 +70,6 @@ export default function Profile() {
                     <label>Telefone (WhatsApp)</label>
                     <input placeholder="(00) 00000-0000" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
 
-                    {/* CAMPO PIX EXCLUSIVO PARA ONG */}
                     {isOng && (
                         <>
                             <label>Chave PIX (para receber doações)</label>
@@ -99,9 +102,31 @@ export default function Profile() {
                 <h2>Alterar Senha</h2>
                 <form onSubmit={handleUpdatePassword} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem', width: '100%' }}>
                     <label>Senha Atual</label>
-                    <input type="password" required value={passwords.currentPassword} onChange={e => setPasswords({ ...passwords, currentPassword: e.target.value })} />
+                    <div className="password-wrapper">
+                        <input
+                            type={showCurrent ? "text" : "password"}
+                            required
+                            value={passwords.currentPassword}
+                            onChange={e => setPasswords({ ...passwords, currentPassword: e.target.value })}
+                        />
+                        <button type="button" className="eye-btn" onClick={() => setShowCurrent(!showCurrent)}>
+                            {showCurrent ? '🙈' : '👁️'}
+                        </button>
+                    </div>
+
                     <label>Nova Senha</label>
-                    <input type="password" required value={passwords.newPassword} onChange={e => setPasswords({ ...passwords, newPassword: e.target.value })} />
+                    <div className="password-wrapper">
+                        <input
+                            type={showNew ? "text" : "password"}
+                            required
+                            value={passwords.newPassword}
+                            onChange={e => setPasswords({ ...passwords, newPassword: e.target.value })}
+                        />
+                        <button type="button" className="eye-btn" onClick={() => setShowNew(!showNew)}>
+                            {showNew ? '🙈' : '👁️'}
+                        </button>
+                    </div>
+
                     <button type="submit" className="btn-primary" style={{ width: 'fit-content', marginTop: '0.5rem' }}>Alterar Senha</button>
                 </form>
             </div>
