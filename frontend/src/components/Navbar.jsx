@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
@@ -7,7 +7,6 @@ export default function Navbar() {
     const [open, setOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
 
     const close = () => setOpen(false);
 
@@ -16,15 +15,6 @@ export default function Navbar() {
         close();
         setProfileOpen(false);
         window.location.href = '/';
-    };
-
-    const handleAnimalClick = () => {
-        close();
-        if (location.pathname === '/') {
-            document.getElementById('animais')?.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            navigate('/#animais');
-        }
     };
 
     return (
@@ -39,7 +29,8 @@ export default function Navbar() {
                 <nav className={`nav-links ${open ? 'open' : ''}`}>
                     {user && (
                         <>
-                            <button onClick={handleAnimalClick} className="nav-link-btn">Animais</button>
+                            {/* AQUI ESTÁ A MUDANÇA: De botão "Animais" para Link "Início" */}
+                            <NavLink to="/" onClick={close}>Início</NavLink>
 
                             {user.role === 'USER' && (
                                 <>
@@ -48,7 +39,10 @@ export default function Navbar() {
                                     <NavLink to="/enviar-animal" onClick={close}>Doar meu animal</NavLink>
                                 </>
                             )}
-                            {user.role === 'ONG' && <NavLink to="/painel" onClick={close}>Meu Painel</NavLink>}
+
+                            {user.role === 'ONG' && (
+                                <NavLink to="/painel" onClick={close}>Meu Painel</NavLink>
+                            )}
                         </>
                     )}
 
@@ -62,8 +56,8 @@ export default function Navbar() {
                     {user && (
                         <div className="profile-container">
                             <button className="btn-profile" onClick={() => setProfileOpen(!profileOpen)}>
-                                {user.avatarUrl && <img src={user.avatarUrl} alt="" className="avatar-nav" />}
-                                <span className="profile-name">{user.name.split(' ')[0]}</span> <span className="arrow">▾</span>
+                                {user.avatarUrl && <img src={user.avatarUrl} alt="" style={{ width: 24, height: 24, borderRadius: '50%', objectFit: 'cover', marginRight: 5 }} />}
+                                {user.name.split(' ')[0]} <span className="arrow">▾</span>
                             </button>
 
                             {profileOpen && (
