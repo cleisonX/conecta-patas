@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  name         String
+  email        String @unique
+  passwordHash String
+  role         String @default("USER")
+  phone        String?
+  city         String?
+  state        String?
+  address      String?
+  description  String?
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  
+  ong              Ong?
+  adoptionRequests AdoptionRequest[]
+  tempHomeRequests TempHomeRequest[]
+  donationPledges  DonationPledge[]
+  submittedAnimals Animal[] @relation("SubmittedByUser")
+}
+
+model Ong {
+  id          Int     @id @default(autoincrement())
+  userId      Int     @unique
+  user        User    @relation(fields: [userId], references: [id])
+  name        String
+  cnpj        String? @unique
+  description String?
+  phone       String?
+  city        String
+  state       String
+  address     String?
+  avatarUrl   String?
+  pixKey      String?
+  verified    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  
+  animals     Animal[]
+}
+
+model Animal {
+  id                Int     @id @default(autoincrement())
+  name              String
+  species           String
+  breed             String?
+  ageMonths         Int?
+  gender            String?
+  size              String?
+  description       String?
+  status            String  @default("PENDING")
+  isForAdoption     Boolean @default(true) // <-- NOVO CAMPO
+  needsTempHome     Boolean @default(false)
+  needsMoney        Boolean @default(false)
+  ongId             Int?
+  submittedByUserId Int?
+  submissionReason  String?
+  rejectionReason   String?
+  createdAt         DateTime @default(now())
+  
+  ong               Ong?    @relation(fields: [ongId], references: [id])
+  submittedByUser   User?   @relation("SubmittedByUser", fields: [submittedByUserId], references: [id])
+  images            AnimalImage[]
+  adoptionRequests  AdoptionRequest[]
+  tempHomeRequests  TempHomeRequest[]
+  donationPledges   DonationPledge[]
+}
+
+model AnimalImage {
+  id       Int    @id @default(autoincrement())
+  animalId Int
+  url      String
+  isMain   Boolean @default(false)
+  
+  animal   Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+}
+
+model AdoptionRequest {
+  id         Int    @id @default(autoincrement())
+  animalId   Int
+  userId     Int
+  message    String?
+  status     String @default("PENDING")
+  createdAt  DateTime @default(now())
+  reviewedAt DateTime?
+  
+  animal     Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  user       User   @relation(fields: [userId], references: [id])
+}
+
+model TempHomeRequest {
+  id        Int    @id @default(autoincrement())
+  animalId  Int
+  userId    Int
+  message   String?
+  status    String @default("PENDING")
+  createdAt DateTime @default(now())
+  
+  animal    Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  user      User   @relation(fields: [userId], references: [id])
+}
+
+model DonationPledge {
+  id        Int    @id @default(autoincrement())
+  animalId  Int
+  userId    Int
+  type      String
+  amount    Float?
+  message   String?
+  status    String @default("PENDING")
+  createdAt DateTime @default(now())
+  
+  animal    Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  user      User   @relation(fields: [userId], references: [id])
+}

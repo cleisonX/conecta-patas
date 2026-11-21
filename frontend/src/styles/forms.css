@@ -1,0 +1,161 @@
+.form-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.form-card label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: -0.5rem;
+    width: 100%;
+    text-align: left;
+}
+
+.form-card input,
+.form-card select,
+.form-card textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    background: #fafafa;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(255, 127, 80, 0.1);
+}
+
+.form-card textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Botão padrão dos formulários (tamanho do texto, alinhado à esquerda por padrão) */
+.form-card button[type="submit"],
+.form-card .btn-primary {
+    width: auto;
+    padding: 0.8rem 2rem;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}
+
+.row-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .row-2 {
+        flex-direction: row;
+    }
+
+    .row-2>* {
+        flex: 1;
+    }
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    width: 100%;
+}
+
+.check input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+}
+
+.toggle-row {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 50px;
+    padding: 5px;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.toggle-row button {
+    flex: 1;
+    background: transparent;
+    color: var(--muted);
+    padding: 0.6rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.toggle-row button.active {
+    background: #fff;
+    color: var(--primary);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.auth-wrap {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, #fdfbf7 0%, #f4f1ea 100%);
+}
+
+/* Regras específicas para a tela de Login/Registro (Centralizado) */
+.auth-wrap .form-card {
+    align-items: center;
+    text-align: center;
+}
+
+.auth-wrap .form-card input {
+    text-align: left;
+}
+
+/* Mantém o texto digitado alinhado à esquerda */
+.auth-wrap .form-card label {
+    text-align: center;
+}
+
+/* Centraliza os labels */
+
+/* O SEGREDO PARA O BOTÃO ENTRAR FICAR NO MEIO: */
+.auth-wrap .form-card button[type="submit"] {
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 1rem;
+}
+
+.success-card {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 3rem 1.5rem;
+    border-radius: var(--radius);
+    text-align: center;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+}
